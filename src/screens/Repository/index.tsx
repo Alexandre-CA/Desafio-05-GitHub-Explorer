@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRoute } from '@react-navigation/core';
 import { Linking } from 'react-native';
 import { useRepositories } from '../../hooks/useRepositories';
@@ -38,8 +38,8 @@ export function Repository() {
 
   function handleIssueNavigation(issueUrl: string) {
     // TODO - use Linking to open issueUrl in a browser
+    Linking.openURL(issueUrl);
   }
-
   return (
     <Background>
       <Container>
@@ -49,12 +49,14 @@ export function Repository() {
           <TextGroup>
             <TitleAnimation>
               {
+                repository?.full_name
                 // TODO - full name of the repository
               }
             </TitleAnimation>
 
             <Description numberOfLines={2}>{
               //TODO - repository description
+              repository?.description
             }</Description>
           </TextGroup>
         </RepoInfo>
@@ -63,6 +65,7 @@ export function Repository() {
           <Stars>
             <StarsCounter>{
               // TODO - repository stargazers count
+              repository?.stargazers_count
             }</StarsCounter>
             <StarsText>Stars</StarsText>
           </Stars>
@@ -70,6 +73,7 @@ export function Repository() {
           <Forks>
             <ForksCounter>{
               // TODO - repository forks count
+              repository?.forks_count
             }</ForksCounter>
             <ForksText>Forks</ForksText>
           </Forks>
@@ -77,6 +81,7 @@ export function Repository() {
           <OpenIssues>
             <OpenIssuesCounter>{
               // TODO - repository issues count
+              repository?.open_issues_count
             }</OpenIssuesCounter>
             <OpenIssuesText>Issues{'\n'}Abertas</OpenIssuesText>
           </OpenIssues>
@@ -94,6 +99,7 @@ export function Repository() {
                 subTitle: issue.user.login,
               }}
               // TODO - onPress prop calling 
+              onPress={()=> handleIssueNavigation(issue.html_url)}
             />
           )}
         />
